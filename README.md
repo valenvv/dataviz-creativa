@@ -7,7 +7,7 @@
 
 ![Alt text](thumbnail.jpg)
 
-Referencia: [Making Data Viz Without SVG Using D3 & Flexbox](https://pudding.cool/process/flexbox-layout/)
+Referencias: [Escalas de d3.js](https://d3js.org/d3-scale)
 
 ---
 
