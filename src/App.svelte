@@ -1,6 +1,7 @@
 <script>
   import * as d3 from "d3"
   import { schemeCategory10 } from "d3-scale-chromatic";
+  import { onMount } from "svelte"
 
 
   /* Array donde guardaremos la data */
@@ -18,22 +19,26 @@
   /* Escala para altura */
   let radioAltura = d3.scaleRadial()
 
-  d3.csv("./data/deportistas.csv", d3.autoType).then(data => {
-    console.log(data)
-
-    /* Actualizamos dominio y rango con la data de edad */
-    let minMaxEdad = d3.extent(data, d => d.edad)
-    grosor = grosor.domain(minMaxEdad).range([1, 20])
-    
-    /* Actualizamos dominio y rango con la data de altura */
-    let minMaxAltura = d3.extent(data, d => d.altura)
-    radioAltura = radioAltura.domain(minMaxAltura).range([25, 50])
-
-
-    colorContinentes = colorContinentes.domain(data.map(d => d.continente))
-    
-    deportistas = data
+  onMount(() => {
+    d3.csv("./data/deportistas.csv", d3.autoType).then(data => {
+      console.log(data)
+  
+      /* Actualizamos dominio y rango con la data de edad */
+      let minMaxEdad = d3.extent(data, d => d.edad)
+      grosor = grosor.domain(minMaxEdad).range([1, 20])
+      
+      /* Actualizamos dominio y rango con la data de altura */
+      let minMaxAltura = d3.extent(data, d => d.altura)
+      radioAltura = radioAltura.domain(minMaxAltura).range([25, 50])
+  
+      colorContinentes = colorContinentes.domain(data.map(d => d.continente))
+      
+      deportistas = data
+    })
   })
+
+
+
 </script>
 
 <main>
