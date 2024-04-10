@@ -5,7 +5,10 @@
 ---
 
 
-![Alt text](thumbnail.jpg)
+![Final](thumbnail-2.png)
+
+## Boceto
+![Boceto](thumbnail.jpg)
 
 Referencias: [Escalas de d3.js](https://d3js.org/d3-scale)
 
