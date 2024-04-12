@@ -13,6 +13,12 @@
     .scaleOrdinal()
     .domain(["F", "M"])
     .range(["#ffc0cb", "#c0f9ff"])
+  
+  let svgTallo = d3
+    .scaleOrdinal() 
+    .domain([0,1,2,3,4,5,7,8,10,14])
+    .range(["Tallo 0.svg", "Tallo 1.svg", "Tallo 2.svg", "Tallo 3.svg", "Tallo 4.svg", "Tallo 5.svg",
+    "Tallo 7.svg","Tallo 8.svg","Tallo 10.svg","Tallo 14.svg"])
 
   /* 3. Escala para continentes */
   let colorContinentes = d3
@@ -46,6 +52,7 @@
 </script>
 
 <main>
+  <!--img src="\images\Tallo 0.svg"-->
   <div class="header">
     <img src="/images/olympics-logo.png" width="100" alt="anillos" />
     <h3 class="headline">
