@@ -33,28 +33,59 @@
     return svgsTallo[horas] || 'public/images/default.svg';
   }
 
+  /* SVGs de flores */
+  const svgsFlor = {
+    "Aprendizaje": 'public/images/Flor A.svg',
+    "Entretenimiento": 'public/images/Flor E.svg',
+    "Ambas": 'public/images/Flor A y E.svg',
+    "Ninguno": 'public/images/Flor N.svg',
+  }
+
+  /* Función para seleccionar el SVG correspondiente para la flor */
+  function obtenerSVGFlor(motivacion) {
+    return svgsFlor[motivacion] || '';
+  }
+
   let datos = []
+  let florObject; // Variable para el objeto de la flor
 
   onMount(() => {
     d3.csv("./data/clase.csv", d3.autoType).then(data => {
       datos = data
     })
   })
+
+  // Función para cambiar el color del SVG de la flor
+  function cambiarColorSVG(genero) {
+    const svgDoc = florObject.contentDocument;
+    const paths = svgDoc.querySelectorAll("path");
+    paths.forEach(path => {
+      path.style.fill = colorGenero(genero);
+    });
+  }
 </script>
 
 <main>
   <div class="header">
+  
     <h3 class="headline">
-      <b>Jardín Literario</b>
-      Preferencias literarias de la clase
+      <b>Triunfos Olímpicos</b>
+      Medallas, alturas y continentes
     </h3>
     <p class="bajada">Explorando los logros olímpicos a través de datos</p>
   </div>
 
   <div class="container">
     {#each datos as item}
-      <div class="elemento" style="background-color: {colorGenero(item.Genero)}">
-        <img src="{obtenerSVG(item.Horas)}" alt="SVG" />
+      <div class="elemento">
+        {#if obtenerSVGFlor(item.Motivacion)}
+          <object data="{obtenerSVGFlor(item.Motivacion)}" type="image/svg+xml" width="100" height="100" aria-label="Flor SVG" bind:this={florObject} on:load={() => cambiarColorSVG(item.Genero)}>
+            <img src="{obtenerSVGFlor(item.Motivacion)}" alt="SVG Flor" />
+          </object>
+        {/if}
+        <object data="{obtenerSVG(item.Horas)}" type="image/svg+xml" width="70" height="100" aria-label="Tallo SVG">
+          <img src="public/images/default.svg" alt="SVG Tallo" />
+        </object>
         <p class="nombre">{item.Nombre}</p>
       </div>
     {/each}
