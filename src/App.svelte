@@ -47,7 +47,7 @@
   }
 
   let datos = []
-  let florObject; // Variable para el objeto de la flor
+
 
   onMount(() => {
     d3.csv("./data/clase.csv", d3.autoType).then(data => {
@@ -55,38 +55,32 @@
     })
   })
 
-  // Función para cambiar el color del SVG de la flor
-  function cambiarColorSVG(genero) {
-    const svgDoc = florObject.contentDocument;
-    const paths = svgDoc.querySelectorAll("path");
-    paths.forEach(path => {
-      path.style.fill = colorGenero(genero);
-    });
-  }
+  // Función para cambiar el color del SVG
+
 </script>
 
 <main>
   <div class="header">
   
-    <h3 class="headline">
-      <b>Triunfos Olímpicos</b>
-      Medallas, alturas y continentes
-    </h3>
-    <p class="bajada">Explorando los logros olímpicos a través de datos</p>
+    <h1 class="headline">
+      Jardín Literario
+    </h1>
+    <p class="bajada">Explorando las preferencias literarias de la clase a través de datos</p>
   </div>
 
   <div class="container">
     {#each datos as item}
       <div class="elemento">
+        <p class="nombre">{item.Nombre}</p>
         {#if obtenerSVGFlor(item.Motivacion)}
-          <object data="{obtenerSVGFlor(item.Motivacion)}" type="image/svg+xml" width="100" height="100" aria-label="Flor SVG" bind:this={florObject} on:load={() => cambiarColorSVG(item.Genero)}>
-            <img src="{obtenerSVGFlor(item.Motivacion)}" alt="SVG Flor" />
+          <object data="{obtenerSVGFlor(item.Motivacion, item.Genero)}" type="image/svg+xml" width="100" height="100" aria-label="Flor SVG">
+            <img src="{obtenerSVGFlor(item.Motivacion, item.Genero)}" alt="SVG Flor" />
           </object>
         {/if}
         <object data="{obtenerSVG(item.Horas)}" type="image/svg+xml" width="70" height="100" aria-label="Tallo SVG">
           <img src="public/images/default.svg" alt="SVG Tallo" />
         </object>
-        <p class="nombre">{item.Nombre}</p>
+        <p class="libro">{item.LibroFav}</p>
       </div>
     {/each}
   </div>
@@ -114,5 +108,8 @@
   .nombre {
     margin-top: 10px;
     font-weight: bold;
+  }
+  .header{
+    text-align: center;
   }
 </style>

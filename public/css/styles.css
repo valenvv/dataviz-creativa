@@ -14,8 +14,10 @@
 }
 
 body {
-  background-color: white;
-  color: black;
+  background-color: #FFF3E9;
+  color: #CC2557;
+  font-family: "Perpetua", serif;
+  
 }
 
 a {
@@ -36,6 +38,7 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  font-family: "Perpetua Titling MT", serif;
 }
 
 .card {
