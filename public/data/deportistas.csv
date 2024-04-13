@@ -1,13 +1,13 @@
-nombre,genero,edad,altura,continente,medalla
-Giuseppe Abbagnale,M,33,187,Europa,Plata
-Monica Cecilia Abbott,F,23,191,América,Oro
-Nia Nicole Abdallah,F,20,175,América,Bronce
-Muhammad Abdul Rashid,M,23,181,Asia,Bronce
-Namiq Yadulla Abdullayev,M,25,167,Asia,Bronce
-Yusup Abdusalomov,M,30,170,África,Bronce
-Max Abegglen,M,22,173,Europa,Plata
-Clarence John Abel,M,23,185,América,Oro
-Irene Abel,F,19,160,Oceanía,Oro
-Elvan Abeylegesse,F,25,159,Asia,Bronce
-Nelli Abramova,F,24,171,Asia,Plata
-Domingo Villanueva,M,21,183,Europa,Bronce
+nombre,genero,edad,altura,continente,medalla,numero
+Giuseppe Abbagnale,M,33,187,Europa,Plata,1
+Monica Cecilia Abbott,F,23,191,América,Oro,0
+Nia Nicole Abdallah,F,20,175,América,Bronce,3
+Muhammad Abdul Rashid,M,23,181,Asia,Bronce,4
+Namiq Yadulla Abdullayev,M,25,167,Asia,Bronce,14
+Yusup Abdusalomov,M,30,170,África,Bronce,10
+Max Abegglen,M,22,173,Europa,Plata,2
+Clarence John Abel,M,23,185,América,Oro,0
+Irene Abel,F,19,160,Oceanía,Oro,10
+Elvan Abeylegesse,F,25,159,Asia,Bronce,5
+Nelli Abramova,F,24,171,Asia,Plata,7
+Domingo Villanueva,M,21,183,Europa,Bronce,8

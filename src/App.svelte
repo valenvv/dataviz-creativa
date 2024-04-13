@@ -1,155 +1,87 @@
 <script>
   import * as d3 from "d3"
-  import {onMount} from "svelte"
+  import { onMount } from "svelte"
 
-  /* Array donde guardaremos la data */
-  let deportistas = []
+  /* Escala para género literario */
+  const colorGenero = d3.scaleOrdinal()
+    .domain([
+      "Terror", "Informativos", "Fantasía", "Ensayo", "Novela Gráfica", "Misterio", "Policial", 
+      "Ninguno", "Ciencia Ficción", "Romance", "Acontecimientos Históricos", "Auto ayuda", "Novelas", 
+      "Filosofía", "Realismo mágico", "Ficción", "Biografías", "Non Fiction"
+    ])
+    .range([
+      "#000000", "#83EA00", "#9F00D7", "#A7850B", "#E53619", "#3F1A51", "#175873",
+      "#767676", "#004DB6", "#B16262", "#6B2B07", "#00B554", "#FF5569",
+      "#FECE2E", "#FD6E2A", "#17FAC3", "#9D2229", "#6ED6FD"
+    ])
 
-  /* 1. Escala para edades */
-  let grosor = d3.scaleLinear().range([5, 20])
+  /* SVGs de tallos */
+  function obtenerSVG(horas) {
+    const svgsTallo = {
+      0: 'public/images/Tallo 0.svg',
+      1: 'public/images/Tallo 1.svg',
+      2: 'public/images/Tallo 2.svg',
+      3: 'public/images/Tallo 3.svg',
+      4: 'public/images/Tallo 4.svg',
+      5: 'public/images/Tallo 5.svg',
+      7: 'public/images/Tallo 7.svg',
+      8: 'public/images/Tallo 8.svg',
+      10: 'public/images/Tallo 10.svg',
+      14: 'public/images/Tallo 14.svg'
+    }
 
-  /* 2. Escala para genero */
-  let colorGenero = d3
-    .scaleOrdinal()
-    .domain(["F", "M"])
-    .range(["#ffc0cb", "#c0f9ff"])
-  
-  let svgTallo = d3
-    .scaleOrdinal() 
-    .domain([0,1,2,3,4,5,7,8,10,14])
-    .range(["Tallo 0.svg", "Tallo 1.svg", "Tallo 2.svg", "Tallo 3.svg", "Tallo 4.svg", "Tallo 5.svg",
-    "Tallo 7.svg","Tallo 8.svg","Tallo 10.svg","Tallo 14.svg"])
+    return svgsTallo[horas] || 'public/images/default.svg';
+  }
 
-  /* 3. Escala para continentes */
-  let colorContinentes = d3
-    .scaleOrdinal()
-    .domain(["América", "África", "Asia", "Europa", "Oceanía"])
-    .range(["#ed334e", "#000000", "#fbb132", "#009fe3", "#00963f"])
-
-  /* 4. Escala para altura */
-  let radioAltura = d3.scaleRadial()
-
-  /* 5. Escala para medallas */
-  let colorMedalla = d3.scaleOrdinal()
-    .domain(["Oro", "Plata", "Bronce"])
-    .range(["gold", "silver", "brown"])
+  let datos = []
 
   onMount(() => {
-    d3.csv("./data/deportistas.csv", d3.autoType).then(data => {
-      console.log(data)
-
-      /* Actualizamos dominio con la data de edad */
-      let minMaxEdad = d3.extent(data, d => d.edad)
-      grosor = grosor.domain(minMaxEdad)
-
-      /* Actualizamos dominio y rango con la data de altura */
-      let minMaxAltura = d3.extent(data, d => d.altura)
-      radioAltura = radioAltura.domain(minMaxAltura).range([25, 50])
-
-      deportistas = data
+    d3.csv("./data/clase.csv", d3.autoType).then(data => {
+      datos = data
     })
   })
 </script>
 
 <main>
-  <!--img src="\images\Tallo 0.svg"-->
   <div class="header">
-    <img src="/images/olympics-logo.png" width="100" alt="anillos" />
     <h3 class="headline">
-      <b>Triunfos Olímpicos</b>
-      Medallas, alturas y continentes
+      <b>Jardín Literario</b>
+      Preferencias literarias de la clase
     </h3>
     <p class="bajada">Explorando los logros olímpicos a través de datos</p>
   </div>
 
-  <!-- Conedor de las entidades -->
   <div class="container">
-    <!-- Iteramos la data para visualizar c/ entidad -->
-    {#each deportistas as dep}
-      <div class="person-container">
-        <div class="medal"
-          style="background-color: {colorMedalla(dep.medalla)}"
-          ></div>
-        <div
-          class="person"
-          style="border-width: {grosor(dep.edad)}px; 
-        background-color:{colorGenero(dep.genero)}; 
-        width: {2 * radioAltura(dep.altura)}px; 
-        height: {2 * radioAltura(dep.altura)}px; 
-        border-color: {colorContinentes(dep.continente)}"
-        ></div>
-        <p class="name">
-          <b>{dep.nombre}</b>
-          <br />
-          {dep.continente}
-        </p>
+    {#each datos as item}
+      <div class="elemento" style="background-color: {colorGenero(item.Genero)}">
+        <img src="{obtenerSVG(item.Horas)}" alt="SVG" />
+        <p class="nombre">{item.Nombre}</p>
       </div>
     {/each}
   </div>
 </main>
 
 <style>
-  .header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 50px;
-    margin-bottom: 80px;
-  }
-  .headline {
-    font-size: 30px;
-    line-height: 1.2;
-    font-weight: normal;
-    text-align: center;
-    margin: 20px;
-  }
-  .bajada {
-    font-size: 18px;
-    font-weight: normal;
-    text-align: center;
-    margin: 10px;
-  }
-  .headline b {
-    display: block;
-  }
+  /* Estilos */
   .container {
     display: flex;
-    justify-content: center;
-    align-items: end;
-    margin: auto;
     flex-wrap: wrap;
-    max-width: 1000px;
-    gap: 30px;
-    margin-bottom: 100px;
-  }
-  .person-container {
-    display: flex;
     justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .elemento {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 180px 0 0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-  .person {
-    width: 100px;
-    height: 100px;
-    border: 10px solid black;
-    border-radius: 50%;
-    box-sizing: border-box;
-    background-color: pink;
-  }
-  .medal {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background-color: gold;
-    margin: 5px 0;
-  }
-  .name {
-    font-size: 14px;
-    color: rgb(65, 65, 65);
-    font-weight: normal;
-    text-align: center;
-    margin-top: 5px;
+
+  .nombre {
+    margin-top: 10px;
+    font-weight: bold;
   }
 </style>
