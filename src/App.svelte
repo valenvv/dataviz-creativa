@@ -48,17 +48,23 @@
 
   /* SVGs centro flor*/
   const svgsCentro = {
-    "Digital": 'public/images/fLectD.svg',
+    "Digital":'public/images/fLectD.svg',
     "Fisico": 'public/images/fLectF.svg',
     "Ambas": 'public/images/fLectA.svg',
   }
-  function obtenerSVGCentro(formato) {
+  function obtenerSVGCentro(formato) { // ver reutilizar esta funcion
     return svgsCentro[formato] || '';
   }
 
+  /* SVGs centro flor*/
+  const svgsImportancia = {
+    "Si":'public/images/mariposas.svg',
+  }
+  function obtenerSVGMariposas(formato) {
+    return svgsImportancia[formato] || null;
+  }
+
   let datos = []
-
-
   onMount(() => {
     d3.csv("./data/clase.csv", d3.autoType).then(data => {
       datos = data
@@ -87,14 +93,17 @@
       <div class="elemento">
         <p class="nombre">{item.Nombre}</p>
         <div class="flor">
-          <div>
-            <object  class="centro" data="{obtenerSVGCentro(item.Formato)}" type="image/svg+xml" width="40" height="40" aria-label="Centro SVG">
-              <img src="{obtenerSVGCentro(item.Formato)}" alt="SVG Centro"  />
-            </object>
-          </div>
+          {#if item.Importancia == "Si"}
+            <div>
+                <img class="mariposas"src="public/images/mariposas.svg" alt="SVG Mariposas" width="40" />
+            </div>
+          {/if}
+          <object  class="centro" data="{obtenerSVGCentro(item.Formato)}" type="image/svg+xml" width="40" height="40" aria-label="Centro SVG">
+            <img class="{item.Formato}"src="{obtenerSVGCentro(item.Formato)}" alt="SVG Centro"  />
+          </object>
           {#if obtenerSVGFlor(item.Motivacion)}
             {#if item.Motivacion == "Aprendizaje"}
-              <svg class="flor" width="100" height="100" viewBox="0 0 401 533" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg class="flor" width="130" height="130" viewBox="0 0 401 533" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M135.191 229.658C136.234 233.067 133.058 221.723 128.048 212.16C50.8299 64.722 134.755 -81.2672 184.842 52.9842C199.168 91.3813 225.011 388.457 135.191 229.658Z" fill="{cambiarColor(item.Genero)[1]} "/>
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M199.998 250.225C198.541 251.901 199.667 247.388 199.681 247.302C211.465 178.738 317.076 -3.46544 391.499 105.107C455.641 198.67 140.567 366.373 199.681 247.302" fill="{cambiarColor(item.Genero)[1]} "/>
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M216.944 278.736C205.96 282.74 268.526 272.323 282.648 275.934C400.585 306.101 450.9 461.163 328.042 439.379C313.851 436.863 127.593 275.711 251.839 274.574" fill="{cambiarColor(item.Genero)[1]} "/>
@@ -110,7 +119,7 @@
               </svg>
             {/if}
             {#if item.Motivacion == "Ambas"}
-              <svg class="flor" width="100" height="100" viewBox="0 0 529 502" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg class="flor" width="120" height="120" viewBox="0 0 529 502" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M295.266 203.929C291.721 204.313 303.46 203.322 313.793 200.194C473.098 152.002 600.754 261.821 459.491 285.838C419.088 292.707 122.438 262.368 295.266 203.929Z" fill="{cambiarColor(item.Genero)[0]}"/>
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M227.99 178.864C226.533 180.541 227.659 176.027 227.673 175.942C239.457 107.378 345.068 -74.826 419.491 33.7467C483.633 127.309 168.559 295.013 227.673 175.942" fill="{cambiarColor(item.Genero)[0]}"/>
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M250.106 275.862C238.468 274.757 299.436 292.245 310.636 301.576C404.153 379.51 382.927 541.143 281.362 468.663C269.631 460.291 170.732 234.722 283.403 287.104" fill="{cambiarColor(item.Genero)[0]}"/>
@@ -172,6 +181,7 @@ Código original del svg flor
   }
 
   .elemento {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -190,10 +200,22 @@ Código original del svg flor
 
   .centro{
     position: absolute;
-    object-position: center;
+    top: 33%;
+    left: 52%;
+    transform: translate(-50%, -50%);
     /*VER COMO CENTRAR EN EL MEDIO DE LA FLOR*/
     
   }
+  .Entretenimiento{
+    position: absolute;
+    top: 33%;
+    left: 52%;
+    transform: translate(-50%, -50%);
+  }
 
-
+  .mariposas{
+    position: absolute;
+    right: 70%;
+    top: 17%;
+  }
 </style>
