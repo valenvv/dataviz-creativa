@@ -16,7 +16,7 @@
 body {
   background-color: #FFF3E9;
   color: #CC2557;
-  font-family: "Perpetua", serif;
+  font-family: "DM Sans", sans-serif;
   
 }
 
@@ -83,3 +83,6 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+

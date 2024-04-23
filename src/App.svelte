@@ -1,19 +1,6 @@
 <script>
   import * as d3 from "d3"
   import { onMount } from "svelte"
-
-  /* Escala para género literario */
-  // const colorGenero = d3.scaleOrdinal()
-  //   .domain([
-  //     "Terror", "Informativos", "Fantasía", "Ensayo", "Novela Gráfica", "Misterio", "Policial", 
-  //     "Ninguno", "Ciencia Ficción", "Romance", "Acontecimientos Históricos", "Auto ayuda", "Novelas", 
-  //     "Filosofía", "Realismo mágico", "Ficción", "Biografías", "Non Fiction"
-  //   ])
-  //   .range([
-  //     ["#000000","#4F4641"], ["#83EA00","#CDFF8E"],["#9F00D7","#CF78ED"], ["#A7850B","#D4B648"], ["#E53619","#FF8975"], ["#3F1A51","#A08CAA"], ["#175873","#6B9CB0"],
-  //     ["#767676","#D4CEBA"], ["#004DB6","#5BA1FF"], ["#B16262","#E19C9C"], ["#6B2B07","#BD7F5B"], ["#00B554","#00FF77"], ["#FF586C","#F8C3C1"],
-  //     ["#FECE2E","#FFE695"], ["#FD6E2A","#FFAB84"], ["#FF0099","#FF97D5"], ["#9D2229","#DC7B80"], ["#6ED6FD","#C5EFFF"]
-  //   ])
   const colorGenero = d3.scaleOrdinal()
   .domain(["Fantasía", "No Ficción", "Ninguno", "Ciencia Ficción", 
   "Romance", "Misterio"])
@@ -23,8 +10,7 @@
 
   // Define una función de dominio personalizada para asignar "Otros" a cualquier género no especificado
   /* SVGs de tallos */
-  function obtenerSVG(horas) {
-    const svgsTallo = {
+  const svgsTallo = {
       0: 'public/images/Tallo 0.svg',
       1: 'public/images/Tallo 1.svg',
       2: 'public/images/Tallo 2.svg',
@@ -36,6 +22,7 @@
       10: 'public/images/Tallo 10.svg',
       14: 'public/images/Tallo 14.svg'
     }
+  function obtenerSVG(horas) {
 
     return svgsTallo[horas] || 'public/images/default.svg';
   }
@@ -52,6 +39,12 @@
   function obtenerSVGFlor(motivacion) {
     return svgsFlor[motivacion] || '';
   }
+  
+  // Función para cambiar el color del SVG flor
+  function cambiarColor(genero) {
+    return colorGenero(genero);
+  }
+
 
   /* SVGs centro flor*/
   const svgsCentro = {
@@ -72,16 +65,53 @@
   }
 
   let datos = []
-  onMount(() => {
-    d3.csv("./data/clase.csv", d3.autoType).then(data => {
-      datos = data
-    })
-  })
+  let filtroGenero = '';
+  let filtroMotivacion = '';
+  let filtroImportancia = '';
 
-  // Función para cambiar el color del SVG
-  function cambiarColor(genero) {
-    return colorGenero(genero);
+  function setFilter(value) {
+    if (value == ''){
+      datosFiltrados = datos;
+    }else{
+      filtroGenero = value; // Set the filter to the new value
+    }
   }
+
+  // Función para filtrar los datos según los criterios seleccionados
+  function filtrarDatos() {
+    // Inicialmente, todos los datos están presentes
+    let datosFiltrados = datos;
+
+    // Filtrar por género literario
+    if (filtroGenero !== '') {
+      datosFiltrados = datosFiltrados.filter(item => item.Genero === filtroGenero);
+    }
+
+    // Filtrar por motivación
+    if (filtroMotivacion !== '') {
+      datosFiltrados = datosFiltrados.filter(item => item.Motivacion === filtroMotivacion);
+    }
+
+    // Filtrar por importancia
+    if (filtroImportancia !== '') {
+      datosFiltrados = datosFiltrados.filter(item => item.Importancia === filtroImportancia);
+    }
+
+    return datosFiltrados;
+  }
+
+
+  $: datosFiltrados = filtrarDatos();
+
+  onMount(async () => {
+    datos = await d3.csv("./data/clase.csv", d3.autoType);
+    datosFiltrados = filtrarDatos(); // Update filtered data after the data has loaded
+  });
+  
+  $: filtroGenero && (datosFiltrados = filtrarDatos());
+  $: filtroMotivacion && (datosFiltrados = filtrarDatos());
+  //$: filtroImportancia && (datosFiltrados = filtrarDatos());
+
 
 
 </script>
@@ -95,11 +125,37 @@
     <h3 class="bajada">Explorando las preferencias literarias de la clase a través de datos</h3>
   </div>
 
+  <!-- Controles de filtro por género  -->
+  <div class="filtro">
+    <select bind:value={filtroGenero} on:change={(e) => setFilter(filtroGenero, e.target.value)}>
+      <option value="">Todos los géneros</option>
+      {#each colorGenero.domain() as genero}
+        <option value={genero}>{genero}</option>
+      {/each}
+    </select>
+   
+  </div>
+  
+  <!-- Controles de filtro por motivación -->
+  <select bind:value={filtroMotivacion} on:change={(e) => setFilter(filtroMotivacion, e.target.value)}>
+    <option value="">Todas las motivaciones</option>
+    {#each Array.from(new Set(datos.map(d => d.Motivacion))) as motivacion}
+      <option value={motivacion}>{motivacion}</option>
+    {/each}
+  </select>
+  
+    <!-- Controles de filtro por importancia -->
+  <select bind:value={filtroImportancia}>
+    <option value="">Todas las importancias</option>
+    {#each Array.from(new Set(datos.map(d => d.Importancia))) as importancia}
+      <option value={importancia}>{importancia}</option>
+    {/each}
+  </select>
+
   <div class="container">
-    {#each datos as item}
+    {#each datosFiltrados as item}
       <div class="elemento">
         <p class="nombre">{item.Nombre}</p>
-        <div class="flor">
           {#if item.Importancia == "Si"}
             <div>
                 <img class="mariposas"src="public/images/mariposas.svg" alt="SVG Mariposas" width="40" />
@@ -156,7 +212,7 @@
                 </svg>
             {/if}
           {/if}
-        </div>
+        
         <div class="tallo">
           <object class="tallo" data="{obtenerSVG(item.Horas)}" type="image/svg+xml" height="100" aria-label="Tallo SVG">
             <img src="public/images/default.svg" alt="SVG Tallo" />
@@ -171,11 +227,12 @@
       
     {/each}
   </div>
+  <div class="r-gradient"></div>
   <div class="referencias">
-    <div class="referencia-color"></div>
-    <div class="referencia-genero">
-      <p>Referencia de Géneros:</p>
+    <div class="r-genero">
+      <p class="r-titlulo">Género de lectura de preferencia:</p>
       <ul>
+
         <li><span style="background-color: #9F00D7;"></span>Fantasía</li>
         <li><span style="background-color: #E53619;"></span>No Ficción</li>
         <li><span style="background-color: #767676;"></span>Ninguno</li>
@@ -186,30 +243,23 @@
         
       </ul>
     </div>
-    <div class="referencia-importancia">
-      <p>Importancia de la Lectura:</p>
+    <div class="r-mariposas">
+      <p class="r-titlulo">Importancia de la lectura en el desarrollo personal:</p>
       <ul>
         <li><span class="mariposa"></span>Sí</li>
-        <li>No</li>
+        <li><span></span>No</li>
       </ul>
     </div>
-    <div class="referencia-tallo">
-      <p>Referencia de Tallos:</p>
+    <div class="r-tallo">
+      <p class="r-titlulo">Horas de lectura semanal promedio:</p>
       <ul>
-        <li><img src="public/images/Tallo 0.svg" alt="Tallo 0" /> 0 horas: Desarrollo inicial</li>
-        <li><img src="public/images/Tallo 1.svg" alt="Tallo 1" /> 1 hora: Inicio del crecimiento</li>
-        <li><img src="public/images/Tallo 2.svg" alt="Tallo 2" /> 2 horas: Crecimiento moderado</li>
-        <li><img src="public/images/Tallo 3.svg" alt="Tallo 3" /> 3 horas: Crecimiento estable</li>
-        <li><img src="public/images/Tallo 4.svg" alt="Tallo 4" /> 4 horas: Crecimiento fuerte</li>
-        <li><img src="public/images/Tallo 5.svg" alt="Tallo 5" /> 5 horas: Crecimiento vigoroso</li>
-        <li><img src="public/images/Tallo 7.svg" alt="Tallo 7" /> 7 horas: Crecimiento robusto</li>
-        <li><img src="public/images/Tallo 8.svg" alt="Tallo 8" /> 8 horas: Crecimiento máximo</li>
-        <li><img src="public/images/Tallo 10.svg" alt="Tallo 10" /> 10 horas: Crecimiento excepcional</li>
-        <li><img src="public/images/Tallo 14.svg" alt="Tallo 14" /> 14 horas: Crecimiento superior</li>
+        {#each Object.keys(svgsTallo) as svg}
+          <li><img src="{obtenerSVG(svg)}" alt="{svg}" height="100">{svg}</li>
+        {/each} 
       </ul>
     </div>
-    <div class="referencia-flores">
-      <p>Referencia de Motivación para Leer:</p>
+    <div class="r-flores">
+      <p class="r-titlulo">Motivación de lectura:</p>
       <ul>
         <li><img src="public/images/Flor E.svg" alt="Entretenimiento">Entretenimiento</li>
         <li><img src="public/images/FLOR - APRENDIZAJE.svg" alt="Aprendizaje">Aprendizaje</li>
@@ -217,13 +267,13 @@
         <li><img src="public/images/FLOR - NADA.svg" alt="Ninguno">Ninguno</li>
       </ul>
     </div>
-    <div class="referencia-centros">
-      <p>Centros de Lectura:</p>
+    <div class="r-centros">
+      <p class="r-titlulo">Formato de lectura de preferencia:</p>
       <ul>
-        <li><span class="Rcentro" style="background-image: url('public/images/fLectD.svg');"></span>Digital</li>
-        <li><span class="Rcentro" style="background-image: url('public/images/fLectF.svg');"></span>Físico</li>
-        <li><span class="Rcentro" style="background-image: url('public/images/fLectA.svg');"></span>Ambos</li>
-        <li><span class="Rcentro"></span>Ninguno</li>
+        <li><span class="r-centro" style="background-image: url('public/images/fLectD.svg');"></span>Digital</li>
+        <li><span class="r-centro" style="background-image: url('public/images/fLectF.svg');"></span>Físico</li>
+        <li><span class="r-centro" style="background-image: url('public/images/fLectA.svg');"></span>Ambos</li>
+        <li><span class="r-centro"></span>Ninguno</li>
       </ul>
     </div>
   </div>
@@ -245,6 +295,7 @@
 
   .elemento {
     flex-grow: 1;
+    background-color: #ffffff;
     width: 200px;
     position: relative;
     display: flex;
@@ -254,7 +305,13 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+    transition: all 0.4s ease;
   }
+
+  .elemento:hover {
+    transform: scale(1.04);
+  }
+
 
   .nombre {
     margin-top: 10px;
@@ -266,9 +323,7 @@
 
   .centro{
     position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(7%, 225%);
     /*VER COMO CENTRAR EN EL MEDIO DE LA FLOR*/
     
   }
@@ -291,16 +346,21 @@
   }
 
   /*refs*/
+
   .referencias {
     position:relative; /*SI CAMBIAMOS ESTO SE SITÚAN AL COSTADO DE LAS FLORES, VER*/
     top: 20px;
     right: 20px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     z-index: 999;
   }
 
-  .referencia-color {
+  .r-titlulo{
+    font-weight: bold;
+  }
+  .r-gradient {
     height: 20px;
     width: 100px;
     margin-bottom: 10px;
@@ -308,30 +368,20 @@
     background: linear-gradient(to right, #9F00D7, #00B554);
   }
 
-  .referencia-genero {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
 
-  .referencia-genero p {
-    margin-bottom: 5px;
-  }
-
-  .referencia-genero ul {
+  .r-genero ul {
     list-style: none;
     padding: 0;
     margin: 0;
   }
 
-  .referencia-genero li {
+  .r-genero li {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
   }
 
-  .referencia-genero li span {
+  .r-genero li span {
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -339,31 +389,37 @@
     border-radius: 50%;
   }
 
-  .referencia-importancia {
+  .r-genero {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+  }
+
+  .r-mariposas ,.r-tallo,  .r-flores, .r-centros, .r-flores, .r-genero {
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
+    margin-left: 20px;
+    width: 300px;
   }
 
-  .referencia-importancia p {
-    margin-bottom: 5px;
-  }
-
-  .referencia-importancia ul {
+  .r-mariposas ul {
     list-style: none;
     padding: 0;
     margin: 0;
   }
 
-  .referencia-importancia li {
+  .r-mariposas li {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
   }
 
-  .referencia-importancia li .mariposa {
+  .r-mariposas li .mariposa {
     width: 20px;
     height: 20px;
     background-image: url('public/images/mariposas.svg');
@@ -371,95 +427,81 @@
     background-repeat: no-repeat;
     margin-right: 10px;
   }
-  .referencia-tallo {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+
+  .r-tallo ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 
-  .referencia-tallo p {
+  .r-tallo li {
+    display: flex;
+    align-items: center;
     margin-bottom: 5px;
+    flex-basis: calc(50% - 5px);
   }
 
-  .referencia-tallo ul {
+  .r-tallo li img {
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  .r-flores ul {
     list-style: none;
     padding: 0;
     margin: 0;
   }
 
-  .referencia-tallo li {
+  .r-flores li {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
   }
 
-  .referencia-tallo li img {
+  .r-flores li img {
     width: 20px;
     height: auto;
     margin-right: 10px;
   }
 
-  .referencia-flores {
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-  }
-
-  .referencia-flores p {
-    margin-bottom: 5px;
-  }
-
-  .referencia-flores ul {
+  .r-centros ul {
     list-style: none;
     padding: 0;
     margin: 0;
   }
 
-  .referencia-flores li {
+  .r-centros li {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
   }
 
-  .referencia-flores li img {
-    width: 20px;
-    height: auto;
-    margin-right: 10px;
-  }
-
-  .referencia-centros {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-  }
-
-  .referencia-centros p {
-    margin-bottom: 5px;
-  }
-
-  .referencia-centros ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .referencia-centros li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-  }
-
-  .referencia-centros li .Rcentro {
+  .r-centros li .r-centro {
     width: 20px;
     height: 20px;
     background-size: contain;
     background-repeat: no-repeat;
     margin-right: 10px;
   }
+
+ 
+  .filtro {
+  position: relative;
+  display: inline-block;
+}
+
+  .filtro-icono {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  select {
+    padding-right: 25px; /* espacio para el icono */
+  }
+
 </style>
