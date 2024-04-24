@@ -112,6 +112,15 @@
   $: filtroMotivacion && (datosFiltrados = filtrarDatos());
   //$: filtroImportancia && (datosFiltrados = filtrarDatos());
 
+  //FONDO
+  const gradient = document.querySelector(".gradient");
+
+  function onMouseMove(event) {
+    gradient.style.backgroundImage = 'radial-gradient(at ' + event.clientX + 'px ' + event.clientY+ 'px, #ff8095 0, #f8efe7 70%)';
+  }
+    
+  document.addEventListener("mousemove", onMouseMove);
+
 
 
 </script>
@@ -124,7 +133,6 @@
     </h1>
     <p class="bajada">Explorando las preferencias literarias de la clase a través de datos</p>
   </div>
-
   <!-- Controles de filtro por género  -->
   <!-- <div class="filtro">
     <select bind:value={filtroGenero} on:change={(e) => setFilter(filtroGenero, e.target.value)}>
@@ -479,9 +487,9 @@
     content: '';
     position: absolute;
     top: -10px;
-    left: 0;
-    width: 100%;
-    height: 20px;
+    left: 2%;
+    width: 96%;
+    height: 23px;
     background: url("public/images/anillado.svg");
     background-size: 5%;
     z-index: 2; /* Para colocar el borde detrás del contenido */
@@ -494,7 +502,6 @@
   .r-genero {
     position: relative;
   }
-  /* Ajuste de posición para que el borde no afecte al contenido */
-
+  
 
 </style>
