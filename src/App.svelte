@@ -122,11 +122,11 @@
     <h1 class="headline">
       Jardín Literario
     </h1>
-    <h3 class="bajada">Explorando las preferencias literarias de la clase a través de datos</h3>
+    <p class="bajada">Explorando las preferencias literarias de la clase a través de datos</p>
   </div>
 
   <!-- Controles de filtro por género  -->
-  <div class="filtro">
+  <!-- <div class="filtro">
     <select bind:value={filtroGenero} on:change={(e) => setFilter(filtroGenero, e.target.value)}>
       <option value="">Todos los géneros</option>
       {#each colorGenero.domain() as genero}
@@ -135,8 +135,8 @@
     </select>
    
   </div>
-  
-  <!-- Controles de filtro por motivación -->
+   -->
+  <!-- Controles de filtro por motivación
   <select bind:value={filtroMotivacion} on:change={(e) => setFilter(filtroMotivacion, e.target.value)}>
     <option value="">Todas las motivaciones</option>
     {#each Array.from(new Set(datos.map(d => d.Motivacion))) as motivacion}
@@ -144,14 +144,13 @@
     {/each}
   </select>
   
-    <!-- Controles de filtro por importancia -->
+     Controles de filtro por importancia 
   <select bind:value={filtroImportancia}>
     <option value="">Todas las importancias</option>
     {#each Array.from(new Set(datos.map(d => d.Importancia))) as importancia}
       <option value={importancia}>{importancia}</option>
     {/each}
-  </select>
-
+  </select> -->
   <div class="container">
     {#each datosFiltrados as item}
       <div class="elemento">
@@ -228,6 +227,7 @@
     {/each}
   </div>
   <div class="r-gradient"></div>
+  <h2>Referencias</h2>
   <div class="referencias">
     <div class="r-genero">
       <p class="r-titlulo">Género de lectura de preferencia:</p>
@@ -246,8 +246,8 @@
     <div class="r-mariposas">
       <p class="r-titlulo">Importancia de la lectura en el desarrollo personal:</p>
       <ul>
-        <li><span class="mariposa"></span>Sí</li>
-        <li><span></span>No</li>
+        <li><img src="public/images/mariposas.svg" alt="SVG Mariposas" width="30">Sí</li>
+        <li><span class="mariposa-no"></span>No</li>
       </ul>
     </div>
     <div class="r-tallo">
@@ -295,8 +295,9 @@
 
   .elemento {
     flex-grow: 1;
-    background-color: #ffffff;
+    background-color: #ffe0c785;
     width: 200px;
+    max-width: 200px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -312,7 +313,6 @@
     transform: scale(1.04);
   }
 
-
   .nombre {
     margin-top: 10px;
     font-weight: bold;
@@ -324,9 +324,8 @@
   .centro{
     position: absolute;
     transform: translate(7%, 225%);
-    /*VER COMO CENTRAR EN EL MEDIO DE LA FLOR*/
-    
   }
+
   .Entretenimiento{
     position: absolute;
     top: 33%;
@@ -345,89 +344,46 @@
    position: relative;
   }
 
-  /*refs*/
+  /*REFERENCIAS*/
 
   .referencias {
     position:relative; /*SI CAMBIAMOS ESTO SE SITÚAN AL COSTADO DE LAS FLORES, VER*/
-    top: 20px;
-    right: 20px;
+    margin: 0 auto;
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    z-index: 999;
+    justify-content: center;
+    gap: 20px;
+    padding: 2px;
+    
   }
 
   .r-titlulo{
     font-weight: bold;
   }
-  .r-gradient {
-    height: 20px;
-    width: 100px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    background: linear-gradient(to right, #9F00D7, #00B554);
-  }
 
 
-  .r-genero ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .r-genero li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-  }
-
-  .r-genero li span {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    border-radius: 50%;
-  }
-
-  .r-genero {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
-  }
-
+  /* RECUADRO DE CADA REFERENCIA */
   .r-mariposas ,.r-tallo,  .r-flores, .r-centros, .r-flores, .r-genero {
+    flex-grow: 1;
+    flex-direction: column;
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-    margin-left: 20px;
-    width: 300px;
+    margin-left: 5px;
+    align-items: center;
+    width: 120px;
+    position: relative;
+
   }
 
-  .r-mariposas ul {
+  /*LISTAS DE CADA REFERENCIA*/
+  .r-mariposas ul, .r-flores ul, .r-centros ul, .r-flores ul, .r-genero ul{
     list-style: none;
     padding: 0;
     margin: 0;
   }
-
-  .r-mariposas li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-  }
-
-  .r-mariposas li .mariposa {
-    width: 20px;
-    height: 20px;
-    background-image: url('public/images/mariposas.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    margin-right: 10px;
-  }
-
   .r-tallo ul {
     list-style: none;
     padding: 0;
@@ -437,6 +393,13 @@
     justify-content: space-between;
   }
 
+  .r-genero li, .r-mariposas li, .r-flores li, .r-centros li, .r-flores li{
+    display: flex;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+
+  }
   .r-tallo li {
     display: flex;
     align-items: center;
@@ -444,41 +407,41 @@
     flex-basis: calc(50% - 5px);
   }
 
+  /* Género */
+
+  .r-genero li span {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 10%;
+    border-radius: 50%;
+  }
+
+  /* Desarrollo personal */
+  .r-mariposas li {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+
+  /* Horas semanales de lectura */
   .r-tallo li img {
     height: 40px;
     margin-right: 10px;
   }
 
-  .r-flores ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .r-flores li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-  }
-
+  /* Motivación */
   .r-flores li img {
     width: 20px;
     height: auto;
     margin-right: 10px;
   }
 
-  .r-centros ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .mariposa-no {
+    margin-right: 30px;
   }
 
-  .r-centros li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-  }
-
+  /*Formatos de lectura*/
   .r-centros li .r-centro {
     width: 20px;
     height: 20px;
@@ -487,11 +450,12 @@
     margin-right: 10px;
   }
 
- 
+ /*Filtros*/
+
   .filtro {
   position: relative;
   display: inline-block;
-}
+  }
 
   .filtro-icono {
     position: absolute;
@@ -502,6 +466,35 @@
 
   select {
     padding-right: 25px; /* espacio para el icono */
+    z-index: 1;
   }
+
+  /* ANILLADOS */
+  /* Borde estilo anillado */
+  .referencias .r-mariposas::before,
+  .referencias .r-tallo::before,
+  .referencias .r-flores::before,
+  .referencias .r-centros::before,
+  .referencias .r-genero::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: url("public/images/anillado.svg");
+    background-size: 5%;
+    z-index: 2; /* Para colocar el borde detrás del contenido */
+  }
+
+  .r-mariposas,
+  .r-tallo,
+  .r-flores,
+  .r-centros,
+  .r-genero {
+    position: relative;
+  }
+  /* Ajuste de posición para que el borde no afecte al contenido */
+
 
 </style>
