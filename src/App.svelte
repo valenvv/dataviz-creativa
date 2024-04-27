@@ -133,6 +133,13 @@
     </h1>
     <p class="bajada">Explorando las preferencias literarias de la clase a través de datos</p>
   </div>
+
+  <!-- <span class="boton-ref" style="background-image: url('public/images/fLectA.svg');"></span> -->
+  <a href="#abajo" class="boton-ref-link">
+    <img class="boton-ref" src="public\images\iconRefs.png" width="100px" height="100px" alt="">
+  </a>
+
+    
   <!-- Controles de filtro por género  -->
   <div class="filtro">
     <select bind:value={filtroGenero} on:change={(e) => setFilter(filtroGenero, e.target.value)}>
@@ -142,12 +149,8 @@
       {/each}
     </select>
    
-  </div>
-  
-  <!-- <span class="boton-ref" style="background-image: url('public/images/fLectA.svg');"></span> -->
-  <a href="#abajo" class="boton-ref-link">
-    <img class="boton-ref" src="public\images\iconRefs.png" width="100px" height="100px" alt="">
-  </a>
+  </div> 
+
   
   <!-- Controles de filtro por motivación -->
   <select bind:value={filtroMotivacion} on:change={(e) => setFilter(filtroMotivacion, e.target.value)}>
@@ -156,6 +159,7 @@
       <option value={motivacion}>{motivacion}</option>
     {/each}
   </select>
+
   
   <div class="container">
     {#each datosFiltrados as item}
@@ -292,27 +296,16 @@
     </div>
     <ul class="social-icon">
       <li class="social-icon__item"><a class="social-icon__link" href="#">
-          <ion-icon name="logo-facebook"></ion-icon>
+          <ion-icon name="logo-github"></ion-icon>
         </a></li>
       <li class="social-icon__item"><a class="social-icon__link" href="#">
-          <ion-icon name="logo-twitter"></ion-icon>
-        </a></li>
-      <li class="social-icon__item"><a class="social-icon__link" href="#">
-          <ion-icon name="logo-linkedin"></ion-icon>
-        </a></li>
-      <li class="social-icon__item"><a class="social-icon__link" href="#">
-          <ion-icon name="logo-instagram"></ion-icon>
+          <ion-icon name="logo-figma"></ion-icon>
         </a></li>
     </ul>
-    <ul class="menu">
-      <li class="menu__item"><a class="menu__link" href="#">Home</a></li>
-      <li class="menu__item"><a class="menu__link" href="#">About</a></li>
-      <li class="menu__item"><a class="menu__link" href="#">Services</a></li>
-      <li class="menu__item"><a class="menu__link" href="#">Team</a></li>
-      <li class="menu__item"><a class="menu__link" href="#">Contact</a></li>
-
-    </ul>
-    <p>&copy;2021 Nadine Coelho | All Rights Reserved</p>
+    <p>1° Parcial: Visualización de datos</p>
+    <p> Isabel Nuñez y Valentina Vitetta</p>
+    <p>Universidad Torcutato Di Tella  |  Licenciatura en Tecnología Digital</p>
+    <p>2024</p>
   </footer>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -339,7 +332,7 @@
 
   .elemento {
     flex-grow: 1;
-    background-color: #ffe0c785;
+    background-color: #f3bdcc93;
     width: 250px;
     max-width: 250px;
     position: relative;
@@ -536,8 +529,12 @@
   select {
     padding-right: 25px; /* espacio para el icono */
     z-index: 1;
-  }
+    background-color:#CC2557;
+    border-radius: 10px;
+    border-color: #CC2557;
+    color: white;
 
+  }
   /* ANILLADOS */
   /* Borde estilo anillado */
   .referencias .r-mariposas::before,
@@ -689,6 +686,8 @@
       background-positon-x: 0px;
     }
   }
- 
+
+  
+  
 
 </style>
