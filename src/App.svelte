@@ -67,13 +67,15 @@
   let datos = []
   let filtroGenero = '';
   let filtroMotivacion = '';
-  let filtroImportancia = '';
 
-  function setFilter(value) {
+
+  function setFilter(filter, value) {
     if (value == ''){
       datosFiltrados = datos;
-    }else{
+    }else if (filter === "genero"){
       filtroGenero = value; // Set the filter to the new value
+    }else if (filter === "genero"){
+      filtroMotivacion = value;
     }
   }
 
@@ -82,23 +84,25 @@
     // Inicialmente, todos los datos están presentes
     let datosFiltrados = datos;
 
-    // Filtrar por género literario
+    // Filtrar por género literario si se ha seleccionado un filtro de género
     if (filtroGenero !== '') {
       datosFiltrados = datosFiltrados.filter(item => item.Genero === filtroGenero);
     }
 
-    // Filtrar por motivación
+    // Filtrar por motivación si se ha seleccionado un filtro de motivación
     if (filtroMotivacion !== '') {
       datosFiltrados = datosFiltrados.filter(item => item.Motivacion === filtroMotivacion);
     }
 
-    // Filtrar por importancia
-    if (filtroImportancia !== '') {
-      datosFiltrados = datosFiltrados.filter(item => item.Importancia === filtroImportancia);
+    // Si tanto el filtro de género como el filtro de motivación están activos,
+    // se aplican ambos filtros al mismo tiempo
+    if (filtroGenero !== '' && filtroMotivacion !== '') {
+      datosFiltrados = datos.filter(item => item.Genero === filtroGenero && item.Motivacion === filtroMotivacion);
     }
 
     return datosFiltrados;
   }
+
 
 
   $: datosFiltrados = filtrarDatos();
@@ -110,16 +114,6 @@
   
   $: filtroGenero && (datosFiltrados = filtrarDatos());
   $: filtroMotivacion && (datosFiltrados = filtrarDatos());
-  //$: filtroImportancia && (datosFiltrados = filtrarDatos());
-
-  //FONDO
-  const gradient = document.querySelector(".gradient");
-
-  function onMouseMove(event) {
-    gradient.style.backgroundImage = 'radial-gradient(at ' + event.clientX + 'px ' + event.clientY+ 'px, #ff8095 0, #f8efe7 70%)';
-  }
-    
-  document.addEventListener("mousemove", onMouseMove);
 
 
 
@@ -131,7 +125,7 @@
     <h1 class="headline">
       Jardín Literario
     </h1>
-    <p class="bajada">Explorando las preferencias literarias de la clase a través de datos</p>
+    <p>Explorando las preferencias literarias de la clase a través de datos</p>
   </div>
 
   <!-- <span class="boton-ref" style="background-image: url('public/images/fLectA.svg');"></span> -->
@@ -235,8 +229,7 @@
       </div>
       
     {/each}
-  </div>
-  <div class="r-gradient"></div>
+  </div >
   <h2 id="abajo">Referencias</h2>
   <div class="referencias">
     <div class="r-genero">
@@ -287,6 +280,7 @@
       </ul>
     </div>
   </div>
+  
   <footer class="footer" width="100%">
     <div class="waves">
       <div class="wave" id="wave1"></div>
@@ -295,7 +289,7 @@
       <div class="wave" id="wave4"></div>
     </div>
     <ul class="social-icon">
-      <li class="social-icon__item"><a class="social-icon__link" href="#">
+      <li class="social-icon__item"><a class="social-icon__link" target="_blank" href="https://github.com/valenvv/vd_dataviz_creativa">
           <ion-icon name="logo-github"></ion-icon>
         </a></li>
       <li class="social-icon__item"><a class="social-icon__link" href="#">
@@ -317,7 +311,9 @@
 
   .headline{
     font-family: "DM Sans";
+    margin-bottom: 0;
   }
+  
   .container {
     display: flex;
     flex-wrap: wrap;
@@ -328,10 +324,10 @@
     position: relative;
     margin-right: 15px;
     margin-left: 15px;
+    margin-top: 30px;
   }
 
   .elemento {
-    flex-grow: 1;
     background-color: #f3bdcc93;
     width: 250px;
     max-width: 250px;
@@ -359,31 +355,20 @@
     font-weight:bolder;
     font-size: larger;
   }
+
   .header{
     text-align: center;
   }
 
   .centro{
     position: absolute;
-    transform: translate(6%, 352%);
-  }
-
-  .Entretenimiento{
-    position: absolute;
-    top: 33%;
-    left: 52%;
-    transform: translate(-50%, -50%);
+    transform: translate(4%, 352%);
   }
 
   .mariposas{
     position: absolute;
     right: 65%;
     top: 26%;
-  }
-
-  .libro{
-    text-align: center;
-   position: relative;
   }
 
   /*REFERENCIAS*/
@@ -395,10 +380,14 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
-    padding: 20px;
+    padding: 50px;
     margin-right: 15px;
     margin-left: 15px;
     margin-bottom: 200px;
+  }
+
+  .todas-referencias{
+    background-color: #f3bdcc93;
   }
 
   .r-titlulo{
@@ -563,7 +552,6 @@
   
 
   /* FOOTER! */
-  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
 
 
   .footer {
@@ -571,7 +559,6 @@
     width: 100%;
     height: 300px;
     background: #CC2557;
-    min-width:100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -584,14 +571,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 0;
+    margin: 0px 0;
     flex-wrap: wrap;
   }
 
-  .social-icon__item,
-  .menu__item {
-    list-style: none;
-  }
 
   .social-icon__link {
     font-size: 2rem;
@@ -604,40 +587,19 @@
     transform: translateY(-10px);
   }
 
-  .menu__link {
-    font-size: 1.2rem;
-    color: #fff;
-    margin: 0 10px;
-    display: inline-block;
-    transition: 0.5s;
-    text-decoration: none;
-    opacity: 0.75;
-    font-weight: 300;
-  }
-
-  .menu__link:hover {
-    opacity: 1;
-  }
 
   .footer p {
     color: #fff;
-    margin: 15px 0 10px 0;
-    font-size: 1rem;
-    font-weight: 300
-    
-;
+    margin: 10px 0 10px 0;
   }
-
-  /* en figma */
 
   .wave { 
     position: absolute;
-    top: -100px;
+    top: -98px;
     left: 0;
     width: 100%;
     height: 100px;
     background-image: url("public/images/wave.png");
-    background-color: CC2557;
     background-size: 1000px 100px;
   }
 
@@ -686,8 +648,5 @@
       background-positon-x: 0px;
     }
   }
-
-  
-  
 
 </style>
