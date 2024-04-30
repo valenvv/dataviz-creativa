@@ -129,7 +129,7 @@
   </div>
 
   <!-- <span class="boton-ref" style="background-image: url('public/images/fLectA.svg');"></span> -->
-  <a href="#abajo" class="boton-ref-link">
+  <a href="#referencias" class="boton-ref-link">
     <img class="boton-ref" src="public\images\iconRefs.png" width="100px" height="100px" alt="">
   </a>
 
@@ -230,12 +230,11 @@
       
     {/each}
   </div >
-  <h2 id="abajo">Referencias</h2>
+  <h2 id="referencias">Referencias</h2>
   <div class="referencias">
     <div class="r-genero">
       <p class="r-titlulo">Género de lectura de preferencia:</p>
       <ul>
-
         <li><span style="background-color: #9F00D7;"></span>Fantasía</li>
         <li><span style="background-color: #E53619;"></span>No Ficción</li>
         <li><span style="background-color: #767676;"></span>Ninguno</li>
@@ -243,22 +242,6 @@
         <li><span style="background-color: #FF586C;"></span>Romance</li>
         <li><span style="background-color: #00B554;"></span>Misterio</li>
         <li><span style="background-color: #FECE2E;"></span>Otros</li>
-        
-      </ul>
-    </div>
-    <div class="r-mariposas">
-      <p class="r-titlulo">Importancia de la lectura en el desarrollo personal:</p>
-      <ul>
-        <li><img src="public/images/mariposas.svg" alt="SVG Mariposas" width="30">Sí</li>
-        <li><span class="mariposa-no"></span>No</li>
-      </ul>
-    </div>
-    <div class="r-tallo">
-      <p class="r-titlulo">Horas de lectura semanal promedio:</p>
-      <ul>
-        {#each Object.keys(svgsTallo) as svg}
-          <li><img src="{obtenerSVG(svg)}" alt="{svg}" height="100">{svg}</li>
-        {/each} 
       </ul>
     </div>
     <div class="r-flores">
@@ -270,6 +253,14 @@
         <li><img src="public/images/FLOR - NADA.svg" alt="Ninguno">Ninguno</li>
       </ul>
     </div>
+    <div class="r-tallo">
+      <p class="r-titlulo">Horas de lectura semanal promedio:</p>
+      <ul>
+        {#each Object.keys(svgsTallo) as svg}
+          <li><img src="{obtenerSVG(svg)}" alt="{svg}" height="100">{svg}</li>
+        {/each} 
+      </ul>
+    </div>
     <div class="r-centros">
       <p class="r-titlulo">Formato de lectura de preferencia:</p>
       <ul>
@@ -279,9 +270,16 @@
         <li><span class="r-centro"></span>Ninguno</li>
       </ul>
     </div>
+    <div class="r-mariposas">
+      <p class="r-titlulo">Importancia de la lectura en el desarrollo personal:</p>
+      <ul>
+        <li><img src="public/images/mariposas.svg" alt="SVG Mariposas" width="30">Sí</li>
+        <li><span class="mariposa-no"></span>No</li>
+      </ul>
+    </div>
   </div>
   
-  <footer class="footer" width="100%">
+  <footer class="footer" >
     <div class="waves">
       <div class="wave" id="wave1"></div>
       <div class="wave" id="wave2"></div>
@@ -311,7 +309,7 @@
 
   .headline{
     font-family: "DM Sans";
-    margin-bottom: 0;
+    
   }
   
   .container {
@@ -325,10 +323,11 @@
     margin-right: 15px;
     margin-left: 15px;
     margin-top: 30px;
+    margin-bottom: 30px;
   }
 
   .elemento {
-    background-color: #f3bdcc93;
+    background-color: #ffd2de;
     width: 250px;
     max-width: 250px;
     position: relative;
@@ -373,17 +372,22 @@
 
   /*REFERENCIAS*/
 
+  #referencias{
+    font-size: xx-large;
+  }
+
   .referencias {
-    position:relative; /*SI CAMBIAMOS ESTO SE SITÚAN AL COSTADO DE LAS FLORES, VER*/
+    position:relative;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 30px;
+    gap: 20px;
     padding: 50px;
+    padding-top: 0;
     margin-right: 15px;
     margin-left: 15px;
-    margin-bottom: 200px;
+    margin-bottom: 200px; /*ver*/
   }
 
   .todas-referencias{
@@ -396,25 +400,25 @@
 
 
   /* RECUADRO DE CADA REFERENCIA */
-  .r-mariposas ,.r-tallo,  .r-flores, .r-centros, .r-flores, .r-genero {
+  .r-mariposas ,.r-tallo,  .r-flores, .r-centros, .r-genero {
     flex-grow: 1;
     flex-direction: column;
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
-    padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-    margin-left: 5px;
+    margin-bottom: 20px;
     align-items: center;
-    width: 220px;
-    max-width: 220px;
+    width: 230px;
+    max-width: 230px;
     position: relative;
-    padding:20px;
-
+    padding:30px;
+    margin-right: 15px;
+    margin-left: 15px;
   }
 
   /*LISTAS DE CADA REFERENCIA*/
-  .r-mariposas ul, .r-flores ul, .r-centros ul, .r-flores ul, .r-genero ul{
+  .r-mariposas ul, .r-flores ul, .r-centros ul, .r-genero ul{
     list-style: none;
     padding: 0;
     margin: 0;
@@ -525,7 +529,7 @@
 
   }
   /* ANILLADOS */
-  /* Borde estilo anillado */
+
   .referencias .r-mariposas::before,
   .referencias .r-tallo::before,
   .referencias .r-flores::before,
@@ -536,7 +540,7 @@
     top: -10px;
     left: 2%;
     width: 96%;
-    height: 23px;
+    height: 30px;
     background: url("public/images/anillado.svg");
     background-size: 5%;
     z-index: 2; /* Para colocar el borde detrás del contenido */
@@ -557,6 +561,7 @@
   .footer {
     position: relative;
     width: 100%;
+    min-width: 100%;
     height: 300px;
     background: #CC2557;
     display: flex;
@@ -572,7 +577,19 @@
     justify-content: center;
     align-items: center;
     margin: 0px 0;
-    flex-wrap: wrap;
+
+  }
+ 
+
+  .social-icon {
+    list-style-type: none; /* Para quitar el símbolo de item */
+    padding: 0;
+    margin: 0;
+  }
+
+  .social-icon__item {
+    display: inline-block; /* Para que los elementos estén en línea */
+   
   }
 
 
