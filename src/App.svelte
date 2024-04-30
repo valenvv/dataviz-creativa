@@ -69,13 +69,28 @@
   let filtroMotivacion = '';
 
 
+  // function setFilter(filter, value) {
+  //   if (value == ''){
+  //     datosFiltrados = datos;
+  //   }else if (filter === "genero"){
+  //     filtroGenero = value; // Set the filter to the new value
+  //   }else if (filter === "genero"){
+  //     filtroMotivacion = value;
+  //   }
+  // }
+
   function setFilter(filter, value) {
-    if (value == ''){
+    if (filter === "genero") {
+      filtroGenero = value; // Establecer el filtro de género con el nuevo valor
+    } else if (filter === "motivacion") {
+      filtroMotivacion = value; // Establecer el filtro de motivación con el nuevo valor
+    }
+
+    // Verificar si ambos filtros están vacíos y actualizar los datos filtrados en consecuencia
+    if (filtroGenero === '' && filtroMotivacion === '') {
       datosFiltrados = datos;
-    }else if (filter === "genero"){
-      filtroGenero = value; // Set the filter to the new value
-    }else if (filter === "genero"){
-      filtroMotivacion = value;
+    } else {
+      datosFiltrados = filtrarDatos(); // Actualizar los datos filtrados
     }
   }
 
