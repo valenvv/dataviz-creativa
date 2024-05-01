@@ -131,7 +131,6 @@
   $: filtroMotivacion && (datosFiltrados = filtrarDatos());
 
 
-
 </script>
 
 <main>
@@ -535,12 +534,13 @@
   }
 
   select {
-    padding-right: 25px; /* espacio para el icono */
+    padding: 6px;
     z-index: 1;
     background-color:#CC2557;
-    border-radius: 10px;
+    border-radius: 12px;
     border-color: #CC2557;
     color: white;
+    margin: 40px 9px 0 9px;
 
   }
   /* ANILLADOS */
