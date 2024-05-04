@@ -334,10 +334,11 @@
     padding: 20px;
     max-width: 1200px;
     position: relative;
-    margin-right: 15px;
+    margin: 30px auto;
+    /* margin-right: 15px;
     margin-left: 15px;
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 30px; */
   }
 
   .elemento {
@@ -509,7 +510,7 @@
     position:fixed;
     bottom: 0;
     right: 0;
-    z-index: 2;
+    z-index: 1001;
   }
   
   .boton-ref-link:target .boton-ref {
