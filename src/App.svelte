@@ -390,9 +390,10 @@
     font-size: xx-large;
   }
 
+  
+
   .referencias {
     position:relative;
-    margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -402,10 +403,6 @@
     margin-right: 15px;
     margin-left: 15px;
     margin-bottom: 200px; /*ver*/
-  }
-
-  .todas-referencias{
-    background-color: #f3bdcc93;
   }
 
   .r-titlulo{
@@ -575,10 +572,10 @@
 
   .footer {
     position: relative;
+    min-width:100vh;
     width: 100%;
-    min-width: 100%;
     height: 300px;
-    background: #CC2557;
+    background: #FFBACB;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -610,7 +607,7 @@
 
   .social-icon__link {
     font-size: 2rem;
-    color: #fff;
+    color: #CC2557;
     margin: 0 10px;
     display: inline-block;
     transition: 0.5s;
@@ -621,8 +618,9 @@
 
 
   .footer p {
-    color: #fff;
+    color: #CC2557;
     margin: 10px 0 10px 0;
+    font-weight: bold;
   }
 
   .wave { 
@@ -631,7 +629,7 @@
     left: 0;
     width: 100%;
     height: 100px;
-    background-image: url("public/images/wave.png");
+    background-image: url("public/images/wave1.png");
     background-size: 1000px 100px;
   }
 
