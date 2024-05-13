@@ -9,6 +9,7 @@
     .unknown(["#FECE2E","#FFE695"])
 
   // Define una función de dominio personalizada para asignar "Otros" a cualquier género no especificado
+
   /* SVGs de tallos */
   const svgsTallo = {
       0: 'public/images/Tallo 0.svg',
@@ -238,7 +239,7 @@
         {#if item.LibroFav != null }
           <p class="libro">{item.LibroFav}</p>
         {:else}
-          <p>:(</p>
+          <p style="color: #8E4B5F;">No ha destacado ningun libro</p>
         {/if}
       </div>
       
@@ -308,10 +309,10 @@
           <ion-icon name="logo-figma"></ion-icon>
         </a></li>
     </ul>
-    <p>1° Parcial: Visualización de datos</p>
+    <h3 style="font-weight: bold;">1° Parcial: Visualización de datos</h3>
     <p> Isabel Nuñez y Valentina Vitetta</p>
     <p>Universidad Torcutato Di Tella  |  Licenciatura en Tecnología Digital</p>
-    <p>2024</p>
+   
   </footer>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -605,7 +606,6 @@
    
   }
 
-
   .social-icon__link {
     font-size: 2rem;
     color: #CC2557;
@@ -621,7 +621,6 @@
   .footer p {
     color: #CC2557;
     margin: 10px 0 10px 0;
-    font-weight: bold;
   }
 
   .wave { 
