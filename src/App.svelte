@@ -19,16 +19,16 @@
 
   //////////  tallo de la flor  -> El SVG depende de las horas semanales de lectura 
   const svgsTallo = {
-    0: 'public/images/Tallo 0.svg',
-    1: 'public/images/Tallo 1.svg',
-    2: 'public/images/Tallo 2.svg',
-    3: 'public/images/Tallo 3.svg',
-    4: 'public/images/Tallo 4.svg',
-    5: 'public/images/Tallo 5.svg',
-    7: 'public/images/Tallo 7.svg',
-    8: 'public/images/Tallo 8.svg',
-    10: 'public/images/Tallo 10.svg',
-    14: 'public/images/Tallo 14.svg'
+    0: '../images/Tallo 0.svg',
+    1: '../images/Tallo 1.svg',
+    2: '../images/Tallo 2.svg',
+    3: '../images/Tallo 3.svg',
+    4: '../images/Tallo 4.svg',
+    5: '../images/Tallo 5.svg',
+    7: '../images/Tallo 7.svg',
+    8: '../images/Tallo 8.svg',
+    10: '../images/Tallo 10.svg',
+    14: '../images/Tallo 14.svg'
   }
 
   function obtenerSVGTallo(horas) {
@@ -37,9 +37,9 @@
 
   //////////  centro de la flor  -> El SVG depende del formato de lectura preferido
   const svgsCentro = {
-    "Digital":'public/images/fLectD.svg',
-    "Fisico": 'public/images/fLectF.svg',
-    "Ambas": 'public/images/fLectA.svg',
+    "Digital":'../images/fLectD.svg',
+    "Fisico": '../images/fLectF.svg',
+    "Ambas": '../images/fLectA.svg',
   }
   function obtenerSVGCentro(formato) { // ver reutilizar esta funcion
     return svgsCentro[formato];
@@ -112,7 +112,7 @@
 
   <!-- Boton estático que dirige a las referencias -->
   <a href="#referencias" class="boton-ref-link">
-    <img class="boton-ref" src="public\images\iconRefs.png" width="100px" height="100px" alt="">
+    <img class="boton-ref" src="..\images\iconRefs.png" width="100px" height="100px" alt="">
   </a>
 
     
@@ -147,7 +147,7 @@
         <!-- Mariposas: Importancia de la lectura para el desarrollo personal -->
         {#if item.Importancia == "Si"}
           <div>
-              <img class="mariposas"src="public/images/mariposas.svg" alt="SVG Mariposas" width="40" />
+              <img class="mariposas"src="../images/mariposas.svg" alt="SVG Mariposas" width="40" />
           </div>
         {/if}
 
@@ -236,10 +236,10 @@
     <div class="r-flores">
       <p class="r-titlulo">Motivación de lectura:</p>
       <ul>
-        <li><img src="public/images/Flor E.svg" alt="Entretenimiento">Entretenimiento</li>
-        <li><img src="public/images/FLOR - APRENDIZAJE.svg" alt="Aprendizaje">Aprendizaje</li>
-        <li><img src="public/images/FLOR - AP Y ENT.svg" alt="Ambos">Ambos</li>
-        <li><img src="public/images/FLOR - NADA.svg" alt="Ninguno">Ninguno</li>
+        <li><img src="../images/Flor E.svg" alt="Entretenimiento">Entretenimiento</li>
+        <li><img src="../images/FLOR - APRENDIZAJE.svg" alt="Aprendizaje">Aprendizaje</li>
+        <li><img src="../images/FLOR - AP Y ENT.svg" alt="Ambos">Ambos</li>
+        <li><img src="../images/FLOR - NADA.svg" alt="Ninguno">Ninguno</li>
       </ul>
     </div>
     <div class="r-tallo">
@@ -253,16 +253,16 @@
     <div class="r-centros">
       <p class="r-titlulo">Formato de lectura de preferencia:</p>
       <ul>
-        <li><span class="r-centro" style="background-image: url('public/images/fLectD.svg');"></span>Digital</li>
-        <li><span class="r-centro" style="background-image: url('public/images/fLectF.svg');"></span>Físico</li>
-        <li><span class="r-centro" style="background-image: url('public/images/fLectA.svg');"></span>Ambos</li>
+        <li><span class="r-centro" style="background-image: url('../images/fLectD.svg');"></span>Digital</li>
+        <li><span class="r-centro" style="background-image: url('../images/fLectF.svg');"></span>Físico</li>
+        <li><span class="r-centro" style="background-image: url('../images/fLectA.svg');"></span>Ambos</li>
         <li><span class="r-centro"></span>Ninguno</li>
       </ul>
     </div>
     <div class="r-mariposas">
       <p class="r-titlulo">Importancia de la lectura en el desarrollo personal:</p>
       <ul>
-        <li><img src="public/images/mariposas.svg" alt="SVG Mariposas" width="30">Sí</li>
+        <li><img src="../images/mariposas.svg" alt="SVG Mariposas" width="30">Sí</li>
         <li><span class="mariposa-no"></span>No</li>
       </ul>
     </div>
@@ -520,7 +520,7 @@
     left: 2%;
     width: 96%;
     height: 30px;
-    background: url("public/images/anillado.svg");
+    background: url("../images/anillado.svg");
     background-size: 5%;
     z-index: 2; /* Para colocar el borde detrás del contenido */
   }
@@ -592,7 +592,7 @@
     left: 0;
     width: 100%;
     height: 100px;
-    background-image: url("public/images/wave1.png");
+    background-image: url("../images/wave1.png");
     background-size: 1000px 100px;
   }
 
