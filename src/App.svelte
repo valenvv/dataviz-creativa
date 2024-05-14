@@ -9,7 +9,7 @@
   "Romance", "Misterio"])
   .range([["#9F00D7","#CF78ED"], ["#E53619","#FF8975"],["#767676","#D4CEBA"], ["#004DB6","#5BA1FF"],
     ["#FF586C","#FF8B87"],  ["#00B554","#00FF77"]])
-  .unknown(["#FECE2E","#FFE695"])  // Asignar "Otros" a cualquier género no especificado
+  .unknown(["#BA8E00","#FAD04D"])  // Asignar "Otros" a cualquier género no especificado
 
   // Función para cambiar el color del SVG flor
   function cambiarColor(genero) {
@@ -279,7 +279,7 @@
       <li class="social-icon__item"><a class="social-icon__link" target="_blank" href="https://github.com/valenvv/vd_dataviz_creativa">
           <ion-icon name="logo-github"></ion-icon>
         </a></li>
-      <li class="social-icon__item"><a class="social-icon__link" href="#"> 
+      <li class="social-icon__item"><a class="social-icon__link" target="_blank" href="https://www.figma.com/proto/Ody6xWohVqSWz8Zz9uIURF/Presentaci%C3%B3n-Jard%C3%ADn-Literario?node-id=1-595&t=G01POpJZd3KHDOU5-1&scaling=contain&page-id=0%3A1&starting-point-node-id=1%3A595"> 
           <ion-icon name="logo-figma"></ion-icon>
         </a></li>
     </ul>
@@ -329,7 +329,6 @@
 
   .elemento:hover {
     transform: scale(1.04);
-    /* box-shadow: 0 0 500px #00a2ff4f; */
   }
 
   .nombre {
