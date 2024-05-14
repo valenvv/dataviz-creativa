@@ -112,7 +112,7 @@
 
   <!-- Boton estático que dirige a las referencias -->
   <a href="#referencias" class="boton-ref-link">
-    <img class="boton-ref" src="..\images\iconRefs.png" width="100px" height="100px" alt="">
+    <img class="boton-ref" src="../images/iconRefs.png" width="100px" height="100px" alt="">
   </a>
 
     
