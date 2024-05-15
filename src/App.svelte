@@ -538,7 +538,7 @@
 
   .footer {
     position: relative;
-    min-width:100vh;
+    min-width:100%;
     width: 100%;
     height: 300px;
     background: #FFBACB;
